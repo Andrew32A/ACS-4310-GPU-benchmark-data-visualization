@@ -1,0 +1,24 @@
+/* body {
+  background-image: linear-gradient(to bottom right, #fdfcfb, #c9c1a2);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.8;
+  height: 130vh;
+} */
+
+.chart {
+  width: 800px;
+  height: 400px;
+  margin: 20px auto;
+}
+.bar {
+  fill: steelblue;
+}
+.bar:hover {
+  fill: skyblue;
+}
+.axis-x text {
+  transform: rotate(-45deg);
+  text-anchor: end;
+}
