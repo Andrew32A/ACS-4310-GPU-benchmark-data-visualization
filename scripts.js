@@ -1,7 +1,18 @@
 // set the dimensions and margins of the graph
-const margin = { top: 20, right: 30, bottom: 50, left: 60 };
-const width = 800 - margin.left - margin.right;
-const height = 400 - margin.top - margin.bottom;
+let margin = { top: 20, right: 30, bottom: 50, left: 60 };
+let width = window.innerWidth - margin.left - margin.right;
+let height = window.innerHeight - margin.top - margin.bottom;
+
+// create a function to update the dimensions
+function updateDimensions() {
+  width = window.innerWidth - margin.left - margin.right;
+  height = window.innerHeight - margin.top - margin.bottom;
+
+  // need to call a function to redraw or update the graph here
+}
+
+window.addEventListener("resize", updateDimensions);
+updateDimensions();
 
 // append the SVG element to the body of the page
 const svg = d3
