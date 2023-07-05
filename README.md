@@ -1,1 +1,1 @@
-# GPU-benchmark-data-visualization
+# GPU Benchmark Data Visualization
