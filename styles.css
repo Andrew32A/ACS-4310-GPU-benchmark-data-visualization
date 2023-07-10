@@ -1,5 +1,6 @@
 body {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
@@ -7,10 +8,15 @@ body {
   margin: 0;
 }
 
-.search-container {
+.searchContainer {
   position: relative;
   width: 300px;
   margin-bottom: 20px;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
 }
 
 #suggestions {
@@ -31,7 +37,7 @@ body {
   z-index: 1;
 }
 
-#search-bar {
+#searchBar {
   flex: 1;
   padding: 10px;
   border: 1px solid #ccc;
@@ -39,7 +45,7 @@ body {
   font-size: 16px;
 }
 
-#search-button {
+#searchButton {
   margin-left: 1px;
   padding: 10px 20px;
   border: none;
@@ -65,6 +71,10 @@ body {
 }
 
 #cardContainer {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -98,28 +108,13 @@ body {
   margin-left: 5px;
 }
 
-.chart {
-  width: 800px;
-  height: 400px;
+#chart {
+  width: 400px;
+  height: 300px;
   margin: 20px auto;
-}
-
-.bar {
-  fill: steelblue;
-}
-
-.bar:hover {
-  fill: skyblue;
-}
-
-.axis-x text {
-  transform: rotate(-45deg);
-  text-anchor: end;
-}
-
-.card {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
+  /* need to change this later */
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

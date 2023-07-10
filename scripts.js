@@ -1,5 +1,5 @@
-const searchBar = document.getElementById("search-bar");
-const searchButton = document.getElementById("search-button");
+const searchBar = document.getElementById("searchBar");
+const searchButton = document.getElementById("searchButton");
 const suggestionsList = document.getElementById("suggestions");
 const chartContainer = document.getElementById("chart");
 const cardContainer = document.getElementById("cardContainer");
@@ -54,6 +54,21 @@ searchButton.addEventListener("click", function () {
     // clear previous chart
     chartContainer.innerHTML = "";
 
+    // create card with GPU information
+    cardContainer.innerHTML = `
+        <div class="card">
+          <h2>${selectedGPU.gpuName}</h2>
+          <p><span class="label">G3Dmark:</span> <span class="value">${selectedGPU.G3Dmark}</span></p>
+          <p><span class="label">G2Dmark:</span> <span class="value">${selectedGPU.G2Dmark}</span></p>
+          <p><span class="label">Price:</span> <span class="value">${selectedGPU.price}</span></p>
+          <p><span class="label">GPU Value:</span> <span class="value">${selectedGPU.gpuValue}</span></p>
+          <p><span class="label">TDP:</span> <span class="value">${selectedGPU.TDP}</span></p>
+          <p><span class="label">Power Performance:</span> <span class="value">${selectedGPU.powerPerformance}</span></p>
+          <p><span class="label">Test Date:</span> <span class="value">${selectedGPU.testDate}</span></p>
+          <p><span class="label">Category:</span> <span class="value">${selectedGPU.category}</span></p>
+        </div>
+      `;
+
     // create a bar chart
     const chart = d3
       .select("#chart")
@@ -82,21 +97,6 @@ searchButton.addEventListener("click", function () {
       .attr("width", xScale.bandwidth())
       .attr("height", ([, value]) => 300 - yScale(parseFloat(value)))
       .attr("fill", "steelblue");
-
-    // create card with GPU information
-    cardContainer.innerHTML = `
-      <div class="card">
-        <h2>${selectedGPU.gpuName}</h2>
-        <p><span class="label">G3Dmark:</span> <span class="value">${selectedGPU.G3Dmark}</span></p>
-        <p><span class="label">G2Dmark:</span> <span class="value">${selectedGPU.G2Dmark}</span></p>
-        <p><span class="label">Price:</span> <span class="value">${selectedGPU.price}</span></p>
-        <p><span class="label">GPU Value:</span> <span class="value">${selectedGPU.gpuValue}</span></p>
-        <p><span class="label">TDP:</span> <span class="value">${selectedGPU.TDP}</span></p>
-        <p><span class="label">Power Performance:</span> <span class="value">${selectedGPU.powerPerformance}</span></p>
-        <p><span class="label">Test Date:</span> <span class="value">${selectedGPU.testDate}</span></p>
-        <p><span class="label">Category:</span> <span class="value">${selectedGPU.category}</span></p>
-      </div>
-    `;
   }
 });
 
