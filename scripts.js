@@ -1,5 +1,8 @@
 const searchBar = document.getElementById("search-bar");
+const searchButton = document.getElementById("search-button");
 const suggestionsList = document.getElementById("suggestions");
+const chartContainer = document.getElementById("chart");
+const cardContainer = document.getElementById("cardContainer");
 let dataset = [];
 
 // load the dataset from file
@@ -37,6 +40,66 @@ searchBar.addEventListener("input", function () {
   }
 });
 
+searchButton.addEventListener("click", function () {
+  const gpuName = searchBar.value.trim();
+  const selectedGPU = dataset.find(
+    (item) => item.gpuName.toLowerCase() === gpuName.toLowerCase()
+  );
+
+  if (selectedGPU) {
+    const gpuData = Object.entries(selectedGPU).filter(
+      ([key]) => key !== "gpuName" && key !== "category"
+    );
+
+    // clear previous chart
+    chartContainer.innerHTML = "";
+
+    // create a bar chart
+    const chart = d3
+      .select("#chart")
+      .append("svg")
+      .attr("width", 400)
+      .attr("height", 300);
+
+    const xScale = d3
+      .scaleBand()
+      .domain(gpuData.map(([key]) => key))
+      .range([0, 400])
+      .padding(0.2);
+
+    const yScale = d3
+      .scaleLinear()
+      .domain([0, d3.max(gpuData, ([, value]) => parseFloat(value))])
+      .range([300, 0]);
+
+    chart
+      .selectAll("rect")
+      .data(gpuData)
+      .enter()
+      .append("rect")
+      .attr("x", ([key]) => xScale(key))
+      .attr("y", ([, value]) => yScale(parseFloat(value)))
+      .attr("width", xScale.bandwidth())
+      .attr("height", ([, value]) => 300 - yScale(parseFloat(value)))
+      .attr("fill", "steelblue");
+
+    // create card with GPU information
+    cardContainer.innerHTML = `
+      <div class="card">
+        <h2>${selectedGPU.gpuName}</h2>
+        <p><span class="label">G3Dmark:</span> <span class="value">${selectedGPU.G3Dmark}</span></p>
+        <p><span class="label">G2Dmark:</span> <span class="value">${selectedGPU.G2Dmark}</span></p>
+        <p><span class="label">Price:</span> <span class="value">${selectedGPU.price}</span></p>
+        <p><span class="label">GPU Value:</span> <span class="value">${selectedGPU.gpuValue}</span></p>
+        <p><span class="label">TDP:</span> <span class="value">${selectedGPU.TDP}</span></p>
+        <p><span class="label">Power Performance:</span> <span class="value">${selectedGPU.powerPerformance}</span></p>
+        <p><span class="label">Test Date:</span> <span class="value">${selectedGPU.testDate}</span></p>
+        <p><span class="label">Category:</span> <span class="value">${selectedGPU.category}</span></p>
+      </div>
+    `;
+  }
+});
+
 document.addEventListener("click", function (event) {
   if (!searchBar.contains(event.target)) {
     suggestionsList.style.display = "none";
@@ -47,140 +110,3 @@ suggestionsList.addEventListener("click", function (event) {
   searchBar.value = event.target.textContent;
   suggestionsList.style.display = "none";
 });
-
-// // set the dimensions and margins of the graph
-// let margin = { top: 20, right: 30, bottom: 50, left: 60 };
-// let width = window.innerWidth - margin.left - margin.right;
-// let height = window.innerHeight - margin.top - margin.bottom;
-
-// // create a function to update the dimensions
-// function updateDimensions() {
-//   width = window.innerWidth - margin.left - margin.right;
-//   height = window.innerHeight - margin.top - margin.bottom;
-
-//   // need to call a function to redraw or update the graph here
-// }
-
-// window.addEventListener("resize", updateDimensions);
-// updateDimensions();
-
-// // append the SVG element to the body of the page
-// const svg = d3
-//   .select("body")
-//   .append("svg")
-//   .attr("width", width + margin.left + margin.right)
-//   .attr("height", height + margin.top + margin.bottom)
-//   .append("g")
-//   .attr("transform", `translate(${margin.left},${margin.top})`);
-
-// // read the CSV data
-// d3.csv("./data/benchmarks.csv").then(function (data) {
-//   // format the data
-//   data.forEach(function (d) {
-//     d.G3Dmark = +d.G3Dmark;
-//     d.G2Dmark = +d.G2Dmark;
-//     d.price = +d.price;
-//   });
-
-//   // set the categories (x-axis)
-//   const categories = data.map(function (d) {
-//     return d.gpuName;
-//   });
-
-//   // set the color scale
-//   const color = d3
-//     .scaleOrdinal()
-//     .domain(["G3Dmark", "G2Dmark", "Price"])
-//     .range(["#2C82C9", "#F2B134", "#E64B35"]);
-
-//   // stack the data
-//   const stackedData = d3
-//     .stack()
-//     .keys(["G3Dmark", "G2Dmark", "Price"])
-//     .order(d3.stackOrderNone)
-//     .offset(d3.stackOffsetNone)(data);
-
-//   // set the x and y scales
-//   const x = d3.scaleBand().domain(categories).range([0, width]).padding(0.2);
-
-//   const y = d3
-//     .scaleLinear()
-//     .domain([
-//       0,
-//       d3.max(stackedData, function (d) {
-//         return d3.max(d, function (d) {
-//           return d[1];
-//         });
-//       }),
-//     ])
-//     .range([height, 0]);
-
-//   // create the stacked bars
-//   svg
-//     .selectAll(".series")
-//     .data(stackedData)
-//     .enter()
-//     .append("g")
-//     .attr("class", "series")
-//     .attr("fill", function (d) {
-//       return color(d.key);
-//     })
-//     .selectAll("rect")
-//     .data(function (d) {
-//       return d;
-//     })
-//     .enter()
-//     .append("rect")
-//     .attr("x", function (d) {
-//       return x(d.data.gpuName);
-//     })
-//     .attr("y", function (d) {
-//       return y(d[1]);
-//     })
-//     .attr("height", function (d) {
-//       return y(d[0]) - y(d[1]);
-//     })
-//     .attr("width", x.bandwidth());
-
-//   // add the x-axis
-//   svg
-//     .append("g")
-//     .attr("transform", `translate(0,${height})`)
-//     .call(d3.axisBottom(x))
-//     .selectAll("text")
-//     .attr("y", 10)
-//     .attr("x", -10)
-//     .attr("transform", "rotate(-45)")
-//     .style("text-anchor", "end");
-
-//   // add the y-axis
-//   svg.append("g").call(d3.axisLeft(y));
-
-//   // add the legend
-//   const legend = svg
-//     .selectAll(".legend")
-//     .data(color.domain().slice().reverse())
-//     .enter()
-//     .append("g")
-//     .attr("class", "legend")
-//     .attr("transform", function (d, i) {
-//       return "translate(0," + i * 20 + ")";
-//     });
-
-//   legend
-//     .append("rect")
-//     .attr("x", width - 18)
-//     .attr("width", 18)
-//     .attr("height", 18)
-//     .style("fill", color);
-
-//   legend
-//     .append("text")
-//     .attr("x", width - 24)
-//     .attr("y", 9)
-//     .attr("dy", ".35em")
-//     .style("text-anchor", "end")
-//     .text(function (d) {
-//       return d;
-//     });
-// });

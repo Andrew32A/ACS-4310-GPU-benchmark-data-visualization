@@ -40,6 +40,16 @@ body {
   font-size: 16px;
 }
 
+#search-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+}
+
 #suggestions li {
   padding: 10px;
   cursor: pointer;
