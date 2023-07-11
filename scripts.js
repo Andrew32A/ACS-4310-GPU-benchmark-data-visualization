@@ -80,7 +80,6 @@ function displayGPUData() {
           <p><span class="label">TDP:</span> <span class="value">${selectedGPU.TDP}</span></p>
           <p><span class="label">Power Performance:</span> <span class="value">${selectedGPU.powerPerformance}</span></p>
           <p><span class="label">Test Date:</span> <span class="value">${selectedGPU.testDate}</span></p>
-          <p><span class="label">Category:</span> <span class="value">${selectedGPU.category}</span></p>
         </div>
       `;
 
