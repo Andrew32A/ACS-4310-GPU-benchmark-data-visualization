@@ -20,6 +20,7 @@ d3.text("./data/benchmarks.csv").then((data) => {
   });
 });
 
+// add event listeners
 searchBar.addEventListener("input", function () {
   const inputValue = searchBar.value.toLowerCase();
   const suggestions = dataset.filter((item) =>
@@ -40,7 +41,21 @@ searchBar.addEventListener("input", function () {
   }
 });
 
-searchButton.addEventListener("click", function () {
+searchButton.addEventListener("click", displayGPUData);
+
+document.addEventListener("click", function (event) {
+  if (!searchBar.contains(event.target)) {
+    suggestionsList.style.display = "none";
+  }
+});
+
+suggestionsList.addEventListener("click", function (event) {
+  searchBar.value = event.target.textContent;
+  suggestionsList.style.display = "none";
+  displayGPUData();
+});
+
+function displayGPUData() {
   const gpuName = searchBar.value.trim();
   const selectedGPU = dataset.find(
     (item) => item.gpuName.toLowerCase() === gpuName.toLowerCase()
@@ -98,15 +113,4 @@ searchButton.addEventListener("click", function () {
       .attr("height", ([, value]) => 300 - yScale(parseFloat(value)))
       .attr("fill", "steelblue");
   }
-});
-
-document.addEventListener("click", function (event) {
-  if (!searchBar.contains(event.target)) {
-    suggestionsList.style.display = "none";
-  }
-});
-
-suggestionsList.addEventListener("click", function (event) {
-  searchBar.value = event.target.textContent;
-  suggestionsList.style.display = "none";
-});
+}
