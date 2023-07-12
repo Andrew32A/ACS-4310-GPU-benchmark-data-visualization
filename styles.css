@@ -1,9 +1,5 @@
 body {
-  background-image: linear-gradient(to bottom right, #fdfcfb, #c9c1a2);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.8;
+  background: linear-gradient(135deg, #f6f3ec 0%, #e9e9e7 100%);
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   width: 100vw;
@@ -31,36 +27,31 @@ body {
   width: 50vw;
   height: 100vh;
   transition: transform 0.5s ease-in-out;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
 }
 
 .leftSearchBarContainer {
-  background-image: linear-gradient(to bottom right, #000000, #47100e);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.8;
+  background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  color: #000;
   display: flex;
   flex-direction: row;
-  background-color: #f1f1f1;
 }
 
 .rightSearchBarContainer {
-  background-image: linear-gradient(to bottom right, #000000, #490541);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.8;
+  background: linear-gradient(135deg, #3c3b3f 0%, #603c3c 100%);
+  color: #000;
   display: flex;
   flex-direction: row;
-  background-color: #f8f8f8;
 }
 
 .searchBar {
   padding: 8px;
   margin-bottom: 8px;
-  border: 1px solid #ccc;
+  border: none;
   border-radius: 4px;
   font-size: 16px;
+  background-color: #fff;
+  color: #000;
 }
 
 .searchButton {
@@ -73,6 +64,11 @@ body {
   border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.searchButton:hover {
+  background-color: #45a049;
 }
 
 .suggestions {
@@ -112,17 +108,11 @@ body {
 }
 
 .cardContainer {
-  background-image: linear-gradient(to bottom right, #fdfcfb, #a2b5c9);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.8;
-  pointer-events: none;
+  background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
   position: absolute;
   width: 40%;
   max-height: 80%;
   padding: 20px;
-  background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
@@ -183,7 +173,7 @@ body {
 #chart {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px; /* may need to adjust */
+  gap: 10px;
   position: absolute;
   top: 75%;
   left: 50%;
