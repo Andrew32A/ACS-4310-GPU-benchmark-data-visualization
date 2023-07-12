@@ -97,7 +97,7 @@ function displayGPUData() {
         <h2>${leftSelectedGPU.gpuName}</h2>
         <p><span class="label">G3Dmark:</span> <span class="value">${leftSelectedGPU.G3Dmark}</span></p>
         <p><span class="label">G2Dmark:</span> <span class="value">${leftSelectedGPU.G2Dmark}</span></p>
-        <p><span class="label">Price:</span> <span class="value">${leftSelectedGPU.price}</span></p>
+        <p><span class="label">Price:</span> <span class="value">$${leftSelectedGPU.price}</span></p>
         <p><span class="label">GPU Value:</span> <span class="value">${leftSelectedGPU.gpuValue}</span></p>
         <p><span class="label">TDP:</span> <span class="value">${leftSelectedGPU.TDP}</span></p>
         <p><span class="label">Power Performance:</span> <span class="value">${leftSelectedGPU.powerPerformance}</span></p>
@@ -111,7 +111,7 @@ function displayGPUData() {
         <h2>${rightSelectedGPU.gpuName}</h2>
         <p><span class="label">G3Dmark:</span> <span class="value">${rightSelectedGPU.G3Dmark}</span></p>
         <p><span class="label">G2Dmark:</span> <span class="value">${rightSelectedGPU.G2Dmark}</span></p>
-        <p><span class="label">Price:</span> <span class="value">${rightSelectedGPU.price}</span></p>
+        <p><span class="label">Price:</span> <span class="value">$${rightSelectedGPU.price}</span></p>
         <p><span class="label">GPU Value:</span> <span class="value">${rightSelectedGPU.gpuValue}</span></p>
         <p><span class="label">TDP:</span> <span class="value">${rightSelectedGPU.TDP}</span></p>
         <p><span class="label">Power Performance:</span> <span class="value">${rightSelectedGPU.powerPerformance}</span></p>
