@@ -97,7 +97,7 @@ function displayLeftGPUData() {
 
     // create card with GPU information for the left side
     leftCardContainer.innerHTML = `
-      <div class="card">
+      <div class="leftCardContent">
         <h2>${selectedGPU.gpuName}</h2>
         <p><span class="label">G3Dmark:</span> <span class="value">${selectedGPU.G3Dmark}</span></p>
         <p><span class="label">G2Dmark:</span> <span class="value">${selectedGPU.G2Dmark}</span></p>
@@ -140,7 +140,7 @@ function displayRightGPUData() {
 
     // create card with GPU information for the right side
     rightCardContainer.innerHTML = `
-      <div class="card">
+      <div class="rightCardContent">
         <h2>${selectedGPU.gpuName}</h2>
         <p><span class="label">G3Dmark:</span> <span class="value">${selectedGPU.G3Dmark}</span></p>
         <p><span class="label">G2Dmark:</span> <span class="value">${selectedGPU.G2Dmark}</span></p>

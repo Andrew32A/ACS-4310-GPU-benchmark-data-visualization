@@ -90,42 +90,73 @@ body {
   background-color: #f1f1f1;
 }
 
+.cardContainerWrapper {
+  display: flex;
+  justify-content: space-around;
+}
+
 .cardContainer {
   pointer-events: none;
   position: absolute;
+  width: 40%;
+  max-height: 80%;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
   top: 5%;
-  width: 40vw;
-  height: 40vh;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
-  background-color: #ffffff;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
-  padding: 20px;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #888888 #ffffff;
 }
 
 #leftCardContainer {
-  left: 0;
+  left: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 #rightCardContainer {
-  right: 0;
+  right: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
 }
 
 .cardContainer::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 .cardContainer::-webkit-scrollbar-track {
-  background: #ffffff;
+  background: #f0f0f0;
 }
 
 .cardContainer::-webkit-scrollbar-thumb {
-  background-color: #888888;
+  background: #888;
   border-radius: 20px;
+}
+
+.cardContent {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.leftCardContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 5%;
+}
+
+.rightCardContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 5%;
 }
 
 #chart {
