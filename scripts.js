@@ -232,7 +232,6 @@ function createComparisonChart() {
 
       // set min value for test date bar chart, everything else is 5% less than the min value
       if (property === "testDate") {
-        console.log("last property");
         minVal = 2000;
       } else {
         minVal = minVal - minVal * 0.05;
