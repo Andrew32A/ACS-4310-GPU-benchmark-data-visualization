@@ -1,4 +1,9 @@
 body {
+  background-image: linear-gradient(to bottom right, #fdfcfb, #c9c1a2);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.8;
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   width: 100vw;
@@ -29,12 +34,22 @@ body {
 }
 
 .leftSearchBarContainer {
+  background-image: linear-gradient(to bottom right, #000000, #47100e);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.8;
   display: flex;
   flex-direction: row;
   background-color: #f1f1f1;
 }
 
 .rightSearchBarContainer {
+  background-image: linear-gradient(to bottom right, #000000, #490541);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.8;
   display: flex;
   flex-direction: row;
   background-color: #f8f8f8;
@@ -97,6 +112,11 @@ body {
 }
 
 .cardContainer {
+  background-image: linear-gradient(to bottom right, #fdfcfb, #a2b5c9);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.8;
   pointer-events: none;
   position: absolute;
   width: 40%;
