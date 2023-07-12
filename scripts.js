@@ -8,6 +8,19 @@ const leftCardContainer = document.getElementById("leftCardContainer");
 const rightCardContainer = document.getElementById("rightCardContainer");
 const chartContainer = document.getElementById("chart");
 let dataset = [];
+let leftGPUData = null;
+let rightGPUData = null;
+
+const properties = [
+  "G3Dmark",
+  "G2Dmark",
+  "price",
+  "gpuValue",
+  "TDP",
+  "powerPerformance",
+  "testDate",
+];
+const color = d3.scaleOrdinal().domain(properties).range(d3.schemeTableau10);
 
 // load the dataset from file
 d3.csv("./data/benchmarks.csv").then((data) => {
@@ -88,9 +101,7 @@ function displayLeftGPUData() {
   );
 
   if (selectedGPU) {
-    const gpuData = Object.entries(selectedGPU).filter(
-      ([key]) => key !== "gpuName" && key !== "category"
-    );
+    leftGPUData = selectedGPU;
 
     // clear previous chart
     chartContainer.innerHTML = "";
@@ -109,8 +120,8 @@ function displayLeftGPUData() {
       </div>
     `;
 
-    // create bar chart
-    createBarChart(selectedGPU);
+    // create comparison chart
+    createComparisonChart();
 
     // make the left card container visible
     leftCardContainer.style.opacity = "1";
@@ -131,9 +142,7 @@ function displayRightGPUData() {
   );
 
   if (selectedGPU) {
-    const gpuData = Object.entries(selectedGPU).filter(
-      ([key]) => key !== "gpuName" && key !== "category"
-    );
+    rightGPUData = selectedGPU;
 
     // clear previous chart
     chartContainer.innerHTML = "";
@@ -152,8 +161,8 @@ function displayRightGPUData() {
       </div>
     `;
 
-    // create bar chart
-    createBarChart(selectedGPU);
+    // create comparison chart
+    createComparisonChart();
 
     // make the right card container visible
     rightCardContainer.style.opacity = "1";
@@ -167,55 +176,43 @@ function displayRightGPUData() {
   }
 }
 
-function createBarChart(selectedGPU) {
-  const chartContainer = document.getElementById("chart");
-  const width = chartContainer.offsetWidth;
-  const height = chartContainer.offsetHeight;
+function createComparisonChart() {
+  if (leftGPUData && rightGPUData) {
+    chartContainer.innerHTML = "";
 
-  const svg = d3
-    .select("#chart")
-    .append("svg")
-    .attr("width", width)
-    .attr("height", height);
+    properties.forEach((property, i) => {
+      const svg = d3
+        .select("#chart")
+        .append("svg")
+        .attr("width", chartContainer.offsetWidth)
+        .attr("height", 50);
 
-  const maxG3Dmark = d3.max(dataset, function (d) {
-    return +d.G3Dmark;
-  });
+      const xScale = d3
+        .scaleLinear()
+        .domain([0, d3.max(dataset, (d) => +d[property])])
+        .range([0, chartContainer.offsetWidth - 100]);
 
-  const xScale = d3
-    .scaleLinear()
-    .domain([0, maxG3Dmark])
-    .range([0, width - 100]);
+      svg
+        .selectAll("rect")
+        .data([leftGPUData, rightGPUData])
+        .enter()
+        .append("rect")
+        .attr("y", i * 20)
+        .attr("x", 0)
+        .attr("width", (d) => xScale(d[property]))
+        .attr("height", 20)
+        .attr("fill", color(property));
 
-  const yScale = d3
-    .scaleBand()
-    .domain([selectedGPU.gpuName])
-    .range([0, height]);
-
-  const xAxis = d3.axisBottom(xScale);
-  const yAxis = d3.axisLeft(yScale);
-
-  svg
-    .append("g")
-    .attr("class", "x-axis")
-    .attr("transform", `translate(0, ${height - 50})`)
-    .call(xAxis);
-
-  svg
-    .append("g")
-    .attr("class", "y-axis")
-    .attr("transform", `translate(50, 0)`)
-    .call(yAxis);
-
-  svg
-    .selectAll(".bar")
-    .data([selectedGPU])
-    .enter()
-    .append("rect")
-    .attr("class", "bar")
-    .attr("x", 50)
-    .attr("y", 1000)
-    .attr("width", 500)
-    .attr("height", 500)
-    .attr("fill", "#1f77b4");
+      svg
+        .selectAll("text")
+        .data([leftGPUData, rightGPUData])
+        .enter()
+        .append("text")
+        .attr("y", i * 20 + 10)
+        .attr("x", (d) => xScale(d[property]) + 5)
+        .text((d) => d.gpuName + ": " + d[property])
+        .attr("font-size", "10px")
+        .attr("fill", "#000");
+    });
+  }
 }

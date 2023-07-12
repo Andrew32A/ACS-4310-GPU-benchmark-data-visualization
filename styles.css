@@ -63,7 +63,7 @@ body {
 .suggestions {
   position: absolute;
   top: 52vh; /* tried to place it right below search bar, might need to change this for better responsive design */
-  width: 50%;
+  width: 40%;
   max-height: 200px;
   overflow-y: auto;
   list-style-type: none;
