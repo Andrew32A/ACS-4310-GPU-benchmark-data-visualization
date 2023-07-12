@@ -180,40 +180,60 @@ function createComparisonChart() {
   if (leftGPUData && rightGPUData) {
     chartContainer.innerHTML = "";
 
+    const margin = { top: 50, right: 20, bottom: 30, left: 40 };
+    let width = 400 - margin.left - margin.right;
+    let height = 200 - margin.top - margin.bottom;
+
     properties.forEach((property, i) => {
+      const data = [leftGPUData, rightGPUData];
+
+      const maxVal = Math.max(+leftGPUData[property], +rightGPUData[property]);
+      const xScale = d3.scaleLinear().domain([0, maxVal]).range([0, width]);
+
+      const yScale = d3
+        .scaleBand()
+        .domain(data.map((d) => d.gpuName))
+        .range([height, 0])
+        .padding(0.1);
+
       const svg = d3
         .select("#chart")
         .append("svg")
-        .attr("width", "100%") // SVG will take up the full width of its grid cell
-        .attr("height", "200px"); // Adjust as needed
-
-      const maxVal = Math.max(+leftGPUData[property], +rightGPUData[property]);
-      const xScale = d3
-        .scaleLinear()
-        .domain([0, maxVal])
-        .range([0, chartContainer.offsetWidth / 3 - 100]); // Adjust according to your needs
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
       svg
         .selectAll("rect")
-        .data([leftGPUData, rightGPUData])
+        .data(data)
         .enter()
         .append("rect")
-        .attr("y", (d, i) => i * 50) // Adjust as needed
         .attr("x", 0)
-        .attr("width", (d) => xScale(+d[property]))
-        .attr("height", 20) // Adjust as needed
+        .attr("y", (d) => yScale(d.gpuName))
+        .attr("width", (d) => xScale(d[property]))
+        .attr("height", yScale.bandwidth())
         .attr("fill", color(property));
 
+      const xAxis = d3.axisBottom(xScale);
       svg
-        .selectAll("text")
-        .data([leftGPUData, rightGPUData])
-        .enter()
+        .append("g")
+        .attr("class", "x-axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+
+      const yAxis = d3.axisLeft(yScale);
+      svg.append("g").attr("class", "y-axis").call(yAxis);
+
+      // chart title
+      svg
         .append("text")
-        .attr("y", (d, i) => i * 50 + 15) // Adjust as needed
-        .attr("x", (d) => xScale(d[property]) + 5)
-        .text((d) => d.gpuName + ": " + d[property])
-        .attr("font-size", "10px")
-        .attr("fill", "#000");
+        .attr("x", width / 2)
+        .attr("y", 0 - margin.top / 2)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("text-decoration", "underline")
+        .text(property);
     });
   }
 }
