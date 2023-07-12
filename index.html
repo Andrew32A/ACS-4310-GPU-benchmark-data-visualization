@@ -7,15 +7,17 @@
     <title>GPU Benchmark Data</title>
     <link rel="stylesheet" type="text/css" href="styles.css" />
     <script defer src="https://d3js.org/d3.v7.min.js"></script>
-    <script defer src="./scripts.js"></script>
+    <script defer src="scripts.js"></script>
   </head>
   <body>
     <div class="searchContainer">
-      <input type="text" id="searchBar" placeholder="Search GPU name..." />
+      <input type="text" id="leftSearchBar" placeholder="Search GPU name..." />
+      <input type="text" id="rightSearchBar" placeholder="Search GPU name..." />
       <button id="searchButton">Search</button>
       <ul id="suggestions"></ul>
     </div>
-    <div id="cardContainer"></div>
+    <div id="leftCardContainer"></div>
+    <div id="rightCardContainer"></div>
     <div id="chart"></div>
   </body>
 </html>
