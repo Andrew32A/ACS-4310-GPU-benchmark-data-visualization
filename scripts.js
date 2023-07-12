@@ -199,7 +199,12 @@ function createComparisonChart() {
       const data = [leftGPUData, rightGPUData];
 
       const maxVal = Math.max(+leftGPUData[property], +rightGPUData[property]);
-      const xScale = d3.scaleLinear().domain([0, maxVal]).range([0, width]);
+      let minVal = Math.min(+leftGPUData[property], +rightGPUData[property]);
+      minVal = minVal - minVal * 0.05;
+      const xScale = d3
+        .scaleLinear()
+        .domain([minVal, maxVal])
+        .range([0, width]);
 
       const yScale = d3
         .scaleBand()
