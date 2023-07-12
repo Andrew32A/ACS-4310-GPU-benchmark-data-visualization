@@ -119,7 +119,7 @@ function displayLeftGPUData() {
 
     // create card with GPU information for the left side
     leftCardContainer.innerHTML = `
-      <div class="rightCardContent">
+      <div class="leftCardContent">
       <h2>${selectedGPU.gpuName}</h2>
       <p><span class="label">G3Dmark:</span> <span class="value">${
         selectedGPU.G3Dmark ? selectedGPU.G3Dmark : "Unknown"
@@ -283,6 +283,10 @@ function createComparisonChart() {
         .attr("class", "x-axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
+
+      // adds y axis
+      const yAxis = d3.axisRight(yScale); // use axisRight instead of axisLeft
+      svg.append("g").attr("class", "y-axis").call(yAxis);
 
       // chart title
       svg
