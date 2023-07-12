@@ -20,6 +20,17 @@ const properties = [
   "powerPerformance",
   "testDate",
 ];
+
+const titles = [
+  "G3Dmark",
+  "G2Dmark",
+  "Price",
+  "GPU Value",
+  "TDP",
+  "Power Performance",
+  "Test Date",
+];
+
 const color = d3.scaleOrdinal().domain(properties).range(d3.schemeTableau10);
 
 // load the dataset from file
@@ -181,8 +192,8 @@ function createComparisonChart() {
     chartContainer.innerHTML = "";
 
     const margin = { top: 50, right: 20, bottom: 30, left: 40 };
-    let width = 400 - margin.left - margin.right;
-    let height = 200 - margin.top - margin.bottom;
+    let width = 400 - margin.left - margin.right; // 20% smaller
+    let height = 160 - margin.top - margin.bottom; // 20% smaller
 
     properties.forEach((property, i) => {
       const data = [leftGPUData, rightGPUData];
@@ -193,7 +204,7 @@ function createComparisonChart() {
       const yScale = d3
         .scaleBand()
         .domain(data.map((d) => d.gpuName))
-        .range([height, 0])
+        .range([height, 0]) // flip the range
         .padding(0.1);
 
       const svg = d3
@@ -211,9 +222,12 @@ function createComparisonChart() {
         .append("rect")
         .attr("x", 0)
         .attr("y", (d) => yScale(d.gpuName))
-        .attr("width", (d) => xScale(d[property]))
+        .attr("width", 0) // start with width 0
         .attr("height", yScale.bandwidth())
-        .attr("fill", color(property));
+        .attr("fill", color(property))
+        .transition() // start a transition
+        .duration(2000) // 2 seconds
+        .attr("width", (d) => xScale(d[property])); // and transition the width to its final value
 
       const xAxis = d3.axisBottom(xScale);
       svg
@@ -222,7 +236,7 @@ function createComparisonChart() {
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
 
-      const yAxis = d3.axisLeft(yScale);
+      const yAxis = d3.axisRight(yScale); // use axisRight instead of axisLeft
       svg.append("g").attr("class", "y-axis").call(yAxis);
 
       // chart title
@@ -232,8 +246,7 @@ function createComparisonChart() {
         .attr("y", 0 - margin.top / 2)
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
-        .style("text-decoration", "underline")
-        .text(property);
+        .text(titles[i]);
     });
   }
 }
