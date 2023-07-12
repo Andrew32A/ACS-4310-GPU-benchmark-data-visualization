@@ -119,16 +119,30 @@ function displayLeftGPUData() {
 
     // create card with GPU information for the left side
     leftCardContainer.innerHTML = `
-      <div class="leftCardContent">
-        <h2>${selectedGPU.gpuName}</h2>
-        <p><span class="label">G3Dmark:</span> <span class="value">${selectedGPU.G3Dmark}</span></p>
-        <p><span class="label">G2Dmark:</span> <span class="value">${selectedGPU.G2Dmark}</span></p>
-        <p><span class="label">Price:</span> <span class="value">$${selectedGPU.price}</span></p>
-        <p><span class="label">GPU Value:</span> <span class="value">${selectedGPU.gpuValue}</span></p>
-        <p><span class="label">TDP:</span> <span class="value">${selectedGPU.TDP}</span></p>
-        <p><span class="label">Power Performance:</span> <span class="value">${selectedGPU.powerPerformance}</span></p>
-        <p><span class="label">Test Date:</span> <span class="value">${selectedGPU.testDate}</span></p>
-      </div>
+      <div class="rightCardContent">
+      <h2>${selectedGPU.gpuName}</h2>
+      <p><span class="label">G3Dmark:</span> <span class="value">${
+        selectedGPU.G3Dmark ? selectedGPU.G3Dmark : "Unknown"
+      }</span></p>
+      <p><span class="label">G2Dmark:</span> <span class="value">${
+        selectedGPU.G2Dmark ? selectedGPU.G2Dmark : "Unknown"
+      }</span></p>
+      <p><span class="label">Price:</span> <span class="value">${
+        selectedGPU.price ? "$" + selectedGPU.price : "Unknown"
+      }</span></p>
+      <p><span class="label">GPU Value:</span> <span class="value">${
+        selectedGPU.gpuValue ? selectedGPU.gpuValue : "Unknown"
+      }</span></p>
+      <p><span class="label">TDP:</span> <span class="value">${
+        selectedGPU.TDP ? selectedGPU.TDP : "Unknown"
+      }</span></p>
+      <p><span class="label">Power Performance:</span> <span class="value">${
+        selectedGPU.powerPerformance ? selectedGPU.powerPerformance : "Unknown"
+      }</span></p>
+      <p><span class="label">Test Date:</span> <span class="value">${
+        selectedGPU.testDate ? selectedGPU.testDate : "Unknown"
+      }</span></p>
+    </div>
     `;
 
     // create comparison chart
@@ -162,13 +176,29 @@ function displayRightGPUData() {
     rightCardContainer.innerHTML = `
       <div class="rightCardContent">
         <h2>${selectedGPU.gpuName}</h2>
-        <p><span class="label">G3Dmark:</span> <span class="value">${selectedGPU.G3Dmark}</span></p>
-        <p><span class="label">G2Dmark:</span> <span class="value">${selectedGPU.G2Dmark}</span></p>
-        <p><span class="label">Price:</span> <span class="value">$${selectedGPU.price}</span></p>
-        <p><span class="label">GPU Value:</span> <span class="value">${selectedGPU.gpuValue}</span></p>
-        <p><span class="label">TDP:</span> <span class="value">${selectedGPU.TDP}</span></p>
-        <p><span class="label">Power Performance:</span> <span class="value">${selectedGPU.powerPerformance}</span></p>
-        <p><span class="label">Test Date:</span> <span class="value">${selectedGPU.testDate}</span></p>
+        <p><span class="label">G3Dmark:</span> <span class="value">${
+          selectedGPU.G3Dmark ? selectedGPU.G3Dmark : "Unknown"
+        }</span></p>
+        <p><span class="label">G2Dmark:</span> <span class="value">${
+          selectedGPU.G2Dmark ? selectedGPU.G2Dmark : "Unknown"
+        }</span></p>
+        <p><span class="label">Price:</span> <span class="value">${
+          selectedGPU.price ? "$" + selectedGPU.price : "Unknown"
+        }</span></p>
+        <p><span class="label">GPU Value:</span> <span class="value">${
+          selectedGPU.gpuValue ? selectedGPU.gpuValue : "Unknown"
+        }</span></p>
+        <p><span class="label">TDP:</span> <span class="value">${
+          selectedGPU.TDP ? selectedGPU.TDP : "Unknown"
+        }</span></p>
+        <p><span class="label">Power Performance:</span> <span class="value">${
+          selectedGPU.powerPerformance
+            ? selectedGPU.powerPerformance
+            : "Unknown"
+        }</span></p>
+        <p><span class="label">Test Date:</span> <span class="value">${
+          selectedGPU.testDate ? selectedGPU.testDate : "Unknown"
+        }</span></p>
       </div>
     `;
 
@@ -197,10 +227,16 @@ function createComparisonChart() {
 
     properties.forEach((property, i) => {
       const data = [leftGPUData, rightGPUData];
-
-      const maxVal = Math.max(+leftGPUData[property], +rightGPUData[property]);
+      let maxVal = Math.max(+leftGPUData[property], +rightGPUData[property]);
       let minVal = Math.min(+leftGPUData[property], +rightGPUData[property]);
-      minVal = minVal - minVal * 0.05;
+
+      // set min value for test date bar chart, everything else is 5% less than the min value
+      if (property === "testDate") {
+        console.log("last property");
+        minVal = 2000;
+      } else {
+        minVal = minVal - minVal * 0.05;
+      }
       const xScale = d3
         .scaleLinear()
         .domain([minVal, maxVal])
