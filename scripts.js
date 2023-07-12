@@ -270,15 +270,19 @@ function createComparisonChart() {
         .duration(2000) // 2 seconds
         .attr("width", (d) => xScale(d[property])); // and transition the width to its final value
 
-      const xAxis = d3.axisBottom(xScale);
+      // adds x axis and checks if value is over 1000 to add k and shorten number
+      const xAxis = d3.axisBottom(xScale).tickFormat((d) => {
+        if (d >= 1000 && property !== "testDate") {
+          return d / 1000 + "k";
+        } else {
+          return d;
+        }
+      });
       svg
         .append("g")
         .attr("class", "x-axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
-
-      const yAxis = d3.axisRight(yScale); // use axisRight instead of axisLeft
-      svg.append("g").attr("class", "y-axis").call(yAxis);
 
       // chart title
       svg
