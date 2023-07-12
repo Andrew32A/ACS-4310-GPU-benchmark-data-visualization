@@ -10,14 +10,28 @@
     <script defer src="scripts.js"></script>
   </head>
   <body>
-    <div class="searchContainer">
-      <input type="text" id="leftSearchBar" placeholder="Search GPU name..." />
-      <input type="text" id="rightSearchBar" placeholder="Search GPU name..." />
-      <button id="searchButton">Search</button>
-      <ul id="suggestions"></ul>
+    <div class="searchBars">
+      <div class="searchBarContainer">
+        <input
+          type="text"
+          id="leftSearchBar"
+          placeholder="Search GPU name..."
+        />
+        <button id="leftSearchButton">Search</button>
+        <div id="leftCardContainer"></div>
+        <ul id="leftSuggestions"></ul>
+      </div>
+      <div class="searchBarContainer">
+        <input
+          type="text"
+          id="rightSearchBar"
+          placeholder="Search GPU name..."
+        />
+        <button id="rightSearchButton">Search</button>
+        <div id="rightCardContainer"></div>
+        <ul id="rightSuggestions"></ul>
+      </div>
     </div>
-    <div id="leftCardContainer"></div>
-    <div id="rightCardContainer"></div>
     <div id="chart"></div>
   </body>
 </html>

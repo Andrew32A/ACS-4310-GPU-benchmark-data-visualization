@@ -1,10 +1,12 @@
 const leftSearchBar = document.getElementById("leftSearchBar");
 const rightSearchBar = document.getElementById("rightSearchBar");
-const searchButton = document.getElementById("searchButton");
-const suggestionsList = document.getElementById("suggestions");
-const chartContainer = document.getElementById("chart");
+const leftSuggestionsList = document.getElementById("leftSuggestions");
+const rightSuggestionsList = document.getElementById("rightSuggestions");
+const leftSearchButton = document.getElementById("leftSearchButton");
+const rightSearchButton = document.getElementById("rightSearchButton");
 const leftCardContainer = document.getElementById("leftCardContainer");
 const rightCardContainer = document.getElementById("rightCardContainer");
+const chartContainer = document.getElementById("chart");
 let dataset = [];
 
 // load the dataset from file
@@ -23,68 +25,79 @@ d3.text("./data/benchmarks.csv").then((data) => {
 });
 
 // add event listeners
-leftSearchBar.addEventListener("input", handleSearchInput);
-rightSearchBar.addEventListener("input", handleSearchInput);
-
-searchButton.addEventListener("click", displayGPUData);
+leftSearchButton.addEventListener("click", displayLeftGPUData);
+rightSearchButton.addEventListener("click", displayRightGPUData);
 
 document.addEventListener("click", function (event) {
   if (
     !leftSearchBar.contains(event.target) &&
     !rightSearchBar.contains(event.target)
   ) {
-    suggestionsList.style.display = "none";
+    leftSuggestionsList.style.display = "none";
+    rightSuggestionsList.style.display = "none";
   }
 });
 
-suggestionsList.addEventListener("click", function (event) {
-  const selectedGpuName = event.target.textContent;
-  leftSearchBar.value = selectedGpuName;
-  rightSearchBar.value = selectedGpuName;
-  suggestionsList.style.display = "none";
-  displayGPUData();
+leftSuggestionsList.addEventListener("click", function (event) {
+  leftSearchBar.value = event.target.textContent;
+  leftSuggestionsList.style.display = "none";
+  displayLeftGPUData();
 });
 
-// handle search input for both search bars
-function handleSearchInput() {
+rightSuggestionsList.addEventListener("click", function (event) {
+  rightSearchBar.value = event.target.textContent;
+  rightSuggestionsList.style.display = "none";
+  displayRightGPUData();
+});
+
+leftSearchBar.addEventListener("input", function () {
   const inputValue = this.value.toLowerCase();
   const suggestions = dataset.filter((item) =>
     item.gpuName.toLowerCase().includes(inputValue)
   );
 
-  suggestionsList.innerHTML = "";
+  leftSuggestionsList.innerHTML = "";
   suggestions.forEach((suggestion) => {
     const li = document.createElement("li");
     li.textContent = suggestion.gpuName;
-    suggestionsList.appendChild(li);
+    leftSuggestionsList.appendChild(li);
   });
 
   if (suggestions.length > 0) {
-    suggestionsList.style.display = "block";
+    leftSuggestionsList.style.display = "block";
   } else {
-    suggestionsList.style.display = "none";
+    leftSuggestionsList.style.display = "none";
   }
-}
+});
 
-// display GPU data (cards and chart)
-function displayGPUData() {
-  const leftGpuName = leftSearchBar.value.trim();
-  const rightGpuName = rightSearchBar.value.trim();
-
-  const leftSelectedGPU = dataset.find(
-    (item) => item.gpuName.toLowerCase() === leftGpuName.toLowerCase()
+rightSearchBar.addEventListener("input", function () {
+  const inputValue = this.value.toLowerCase();
+  const suggestions = dataset.filter((item) =>
+    item.gpuName.toLowerCase().includes(inputValue)
   );
 
-  const rightSelectedGPU = dataset.find(
-    (item) => item.gpuName.toLowerCase() === rightGpuName.toLowerCase()
+  rightSuggestionsList.innerHTML = "";
+  suggestions.forEach((suggestion) => {
+    const li = document.createElement("li");
+    li.textContent = suggestion.gpuName;
+    rightSuggestionsList.appendChild(li);
+  });
+
+  if (suggestions.length > 0) {
+    rightSuggestionsList.style.display = "block";
+  } else {
+    rightSuggestionsList.style.display = "none";
+  }
+});
+
+function displayLeftGPUData() {
+  const gpuName = leftSearchBar.value.trim();
+  const selectedGPU = dataset.find(
+    (item) => item.gpuName.toLowerCase() === gpuName.toLowerCase()
   );
 
-  if (leftSelectedGPU && rightSelectedGPU) {
-    const leftGpuData = Object.entries(leftSelectedGPU).filter(
-      ([key]) => key !== "gpuName" && key !== "category"
-    );
-
-    const rightGpuData = Object.entries(rightSelectedGPU).filter(
+  if (selectedGPU) {
+    const gpuData = Object.entries(selectedGPU).filter(
       ([key]) => key !== "gpuName" && key !== "category"
     );
 
@@ -94,38 +107,56 @@ function displayGPUData() {
     // create card with GPU information for the left side
     leftCardContainer.innerHTML = `
       <div class="card">
-        <h2>${leftSelectedGPU.gpuName}</h2>
-        <p><span class="label">G3Dmark:</span> <span class="value">${leftSelectedGPU.G3Dmark}</span></p>
-        <p><span class="label">G2Dmark:</span> <span class="value">${leftSelectedGPU.G2Dmark}</span></p>
-        <p><span class="label">Price:</span> <span class="value">$${leftSelectedGPU.price}</span></p>
-        <p><span class="label">GPU Value:</span> <span class="value">${leftSelectedGPU.gpuValue}</span></p>
-        <p><span class="label">TDP:</span> <span class="value">${leftSelectedGPU.TDP}</span></p>
-        <p><span class="label">Power Performance:</span> <span class="value">${leftSelectedGPU.powerPerformance}</span></p>
-        <p><span class="label">Test Date:</span> <span class="value">${leftSelectedGPU.testDate}</span></p>
-      </div>
-    `;
-
-    // create card with GPU information for the right side
-    rightCardContainer.innerHTML = `
-      <div class="card">
-        <h2>${rightSelectedGPU.gpuName}</h2>
-        <p><span class="label">G3Dmark:</span> <span class="value">${rightSelectedGPU.G3Dmark}</span></p>
-        <p><span class="label">G2Dmark:</span> <span class="value">${rightSelectedGPU.G2Dmark}</span></p>
-        <p><span class="label">Price:</span> <span class="value">$${rightSelectedGPU.price}</span></p>
-        <p><span class="label">GPU Value:</span> <span class="value">${rightSelectedGPU.gpuValue}</span></p>
-        <p><span class="label">TDP:</span> <span class="value">${rightSelectedGPU.TDP}</span></p>
-        <p><span class="label">Power Performance:</span> <span class="value">${rightSelectedGPU.powerPerformance}</span></p>
-        <p><span class="label">Test Date:</span> <span class="value">${rightSelectedGPU.testDate}</span></p>
+        <h2>${selectedGPU.gpuName}</h2>
+        <p><span class="label">G3Dmark:</span> <span class="value">${selectedGPU.G3Dmark}</span></p>
+        <p><span class="label">G2Dmark:</span> <span class="value">${selectedGPU.G2Dmark}</span></p>
+        <p><span class="label">Price:</span> <span class="value">$${selectedGPU.price}</span></p>
+        <p><span class="label">GPU Value:</span> <span class="value">${selectedGPU.gpuValue}</span></p>
+        <p><span class="label">TDP:</span> <span class="value">${selectedGPU.TDP}</span></p>
+        <p><span class="label">Power Performance:</span> <span class="value">${selectedGPU.powerPerformance}</span></p>
+        <p><span class="label">Test Date:</span> <span class="value">${selectedGPU.testDate}</span></p>
       </div>
     `;
 
     // create bar chart
-    createBarChart(leftSelectedGPU, rightSelectedGPU);
+    createBarChart(selectedGPU);
   }
 }
 
-// create bar chart
-function createBarChart(leftGPU, rightGPU) {
+function displayRightGPUData() {
+  const gpuName = rightSearchBar.value.trim();
+  const selectedGPU = dataset.find(
+    (item) => item.gpuName.toLowerCase() === gpuName.toLowerCase()
+  );
+
+  if (selectedGPU) {
+    const gpuData = Object.entries(selectedGPU).filter(
+      ([key]) => key !== "gpuName" && key !== "category"
+    );
+
+    // clear previous chart
+    chartContainer.innerHTML = "";
+
+    // create card with GPU information for the right side
+    rightCardContainer.innerHTML = `
+      <div class="card">
+        <h2>${selectedGPU.gpuName}</h2>
+        <p><span class="label">G3Dmark:</span> <span class="value">${selectedGPU.G3Dmark}</span></p>
+        <p><span class="label">G2Dmark:</span> <span class="value">${selectedGPU.G2Dmark}</span></p>
+        <p><span class="label">Price:</span> <span class="value">$${selectedGPU.price}</span></p>
+        <p><span class="label">GPU Value:</span> <span class="value">${selectedGPU.gpuValue}</span></p>
+        <p><span class="label">TDP:</span> <span class="value">${selectedGPU.TDP}</span></p>
+        <p><span class="label">Power Performance:</span> <span class="value">${selectedGPU.powerPerformance}</span></p>
+        <p><span class="label">Test Date:</span> <span class="value">${selectedGPU.testDate}</span></p>
+      </div>
+    `;
+
+    // create bar chart
+    createBarChart(selectedGPU);
+  }
+}
+
+function createBarChart(selectedGPU) {
   const chartContainer = document.getElementById("chart");
   const width = chartContainer.offsetWidth;
   const height = chartContainer.offsetHeight;
@@ -136,7 +167,7 @@ function createBarChart(leftGPU, rightGPU) {
     .attr("width", width)
     .attr("height", height);
 
-  const maxG3Dmark = Math.max(leftGPU.G3Dmark, rightGPU.G3Dmark);
+  const maxG3Dmark = selectedGPU.G3Dmark;
 
   const xScale = d3
     .scaleLinear()
@@ -145,8 +176,8 @@ function createBarChart(leftGPU, rightGPU) {
 
   const yScale = d3
     .scaleBand()
-    .domain([leftGPU.gpuName, rightGPU.gpuName])
-    .range([0, height - 50]);
+    .domain([selectedGPU.gpuName])
+    .range([0, height]);
 
   const xAxis = d3.axisBottom(xScale);
   const yAxis = d3.axisLeft(yScale);
@@ -154,7 +185,7 @@ function createBarChart(leftGPU, rightGPU) {
   svg
     .append("g")
     .attr("class", "x-axis")
-    .attr("transform", "translate(50, " + (height - 50) + ")")
+    .attr("transform", "translate(50, " + height + ")")
     .call(xAxis);
 
   svg
@@ -164,44 +195,22 @@ function createBarChart(leftGPU, rightGPU) {
     .call(yAxis);
 
   svg
-    .selectAll(".bar.left")
-    .data([leftGPU])
+    .selectAll(".bar")
+    .data([selectedGPU])
     .enter()
     .append("rect")
-    .attr("class", "bar left")
+    .attr("class", "bar")
     .attr("x", 50)
     .attr("y", (d) => yScale(d.gpuName))
     .attr("width", (d) => xScale(d.G3Dmark))
     .attr("height", yScale.bandwidth());
 
   svg
-    .selectAll(".bar.right")
-    .data([rightGPU])
-    .enter()
-    .append("rect")
-    .attr("class", "bar right")
-    .attr("x", 50)
-    .attr("y", (d) => yScale(d.gpuName))
-    .attr("width", (d) => xScale(d.G3Dmark))
-    .attr("height", yScale.bandwidth());
-
-  svg
-    .selectAll(".label.left")
-    .data([leftGPU])
+    .selectAll(".label")
+    .data([selectedGPU])
     .enter()
     .append("text")
-    .attr("class", "label left")
-    .attr("x", (d) => xScale(d.G3Dmark) + 60)
-    .attr("y", (d) => yScale(d.gpuName) + yScale.bandwidth() / 2)
-    .attr("dy", "0.35em")
-    .text((d) => d.G3Dmark);
-
-  svg
-    .selectAll(".label.right")
-    .data([rightGPU])
-    .enter()
-    .append("text")
-    .attr("class", "label right")
+    .attr("class", "label")
     .attr("x", (d) => xScale(d.G3Dmark) + 60)
     .attr("y", (d) => yScale(d.gpuName) + yScale.bandwidth() / 2)
     .attr("dy", "0.35em")
