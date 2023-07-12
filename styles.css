@@ -6,6 +6,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden; /* disable scrolling, the right search bar wrapper can still be seen on the right side, this is just a workaround, may need to fix later */
 }
 
 .searchContainer {
