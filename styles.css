@@ -91,15 +91,41 @@ body {
 }
 
 .cardContainer {
+  pointer-events: none;
   position: absolute;
-  top: 40%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  max-width: 90%;
+  top: 5%;
+  width: 40vw;
+  height: 40vh;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  padding: 20px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #888888 #ffffff;
+}
+
+#leftCardContainer {
+  left: 0;
+}
+
+#rightCardContainer {
+  right: 0;
+}
+
+.cardContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.cardContainer::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+.cardContainer::-webkit-scrollbar-thumb {
+  background-color: #888888;
+  border-radius: 20px;
 }
 
 #chart {

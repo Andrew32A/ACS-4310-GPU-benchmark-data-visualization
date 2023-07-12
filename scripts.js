@@ -112,6 +112,9 @@ function displayLeftGPUData() {
     // create bar chart
     createBarChart(selectedGPU);
 
+    // make the left card container visible
+    leftCardContainer.style.opacity = "1";
+
     // move the left search bar to the left
     document
       .querySelector(".leftSearchBarContainer")
@@ -151,6 +154,9 @@ function displayRightGPUData() {
 
     // create bar chart
     createBarChart(selectedGPU);
+
+    // make the right card container visible
+    rightCardContainer.style.opacity = "1";
 
     // move the right search bar to the right
     document
