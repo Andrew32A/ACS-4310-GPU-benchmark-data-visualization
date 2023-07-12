@@ -161,8 +161,11 @@ body {
 }
 
 #chart {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px; /* may need to adjust */
   position: absolute;
-  top: 50%;
+  top: 75%;
   left: 50%;
   transform: translate(-50%, -50%);
 }

@@ -184,23 +184,24 @@ function createComparisonChart() {
       const svg = d3
         .select("#chart")
         .append("svg")
-        .attr("width", chartContainer.offsetWidth)
-        .attr("height", 50);
+        .attr("width", "100%") // SVG will take up the full width of its grid cell
+        .attr("height", "200px"); // Adjust as needed
 
+      const maxVal = Math.max(+leftGPUData[property], +rightGPUData[property]);
       const xScale = d3
         .scaleLinear()
-        .domain([0, d3.max(dataset, (d) => +d[property])])
-        .range([0, chartContainer.offsetWidth - 100]);
+        .domain([0, maxVal])
+        .range([0, chartContainer.offsetWidth / 3 - 100]); // Adjust according to your needs
 
       svg
         .selectAll("rect")
         .data([leftGPUData, rightGPUData])
         .enter()
         .append("rect")
-        .attr("y", i * 20)
+        .attr("y", (d, i) => i * 50) // Adjust as needed
         .attr("x", 0)
-        .attr("width", (d) => xScale(d[property]))
-        .attr("height", 20)
+        .attr("width", (d) => xScale(+d[property]))
+        .attr("height", 20) // Adjust as needed
         .attr("fill", color(property));
 
       svg
@@ -208,7 +209,7 @@ function createComparisonChart() {
         .data([leftGPUData, rightGPUData])
         .enter()
         .append("text")
-        .attr("y", i * 20 + 10)
+        .attr("y", (d, i) => i * 50 + 15) // Adjust as needed
         .attr("x", (d) => xScale(d[property]) + 5)
         .text((d) => d.gpuName + ": " + d[property])
         .attr("font-size", "10px")
