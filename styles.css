@@ -1,43 +1,68 @@
-.searchBars {
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchContainer {
+  display: flex;
   justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
 }
 
 .searchBarContainer {
+  position: relative;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  justify-content: center;
+  width: 50vw;
+  height: 100vh;
+  transition: transform 0.5s ease-in-out;
 }
 
-#leftSearchBar,
-#rightSearchBar {
-  width: 200px;
-  padding: 10px;
+.leftSearchBarContainer {
+  display: flex;
+  flex-direction: row;
+  background-color: #f1f1f1;
+}
+
+.rightSearchBarContainer {
+  display: flex;
+  flex-direction: row;
+  background-color: #f8f8f8;
+}
+
+.searchBar {
+  padding: 8px;
+  margin-bottom: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
 }
 
-#leftSearchButton,
-#rightSearchButton {
-  margin-left: 1px;
-  padding: 10px 20px;
+.searchButton {
+  padding: 8px;
+  margin-left: 0.2em;
+  margin-bottom: 8px;
+  background-color: #4caf50;
+  color: white;
   border: none;
   border-radius: 4px;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
   font-size: 16px;
+  cursor: pointer;
 }
 
-#leftSuggestions,
-#rightSuggestions {
-  display: none;
+.suggestions {
   position: absolute;
-  top: calc(100% + 5px);
-  width: 200px;
+  top: 52vh; /* tried to place it right below search bar, might need to change this for better responsive design */
+  width: 50%;
   max-height: 200px;
   overflow-y: auto;
   list-style-type: none;
@@ -48,81 +73,50 @@
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1;
+  display: none;
 }
 
-.searchBarContainer:hover #leftSuggestions,
-.searchBarContainer:hover #rightSuggestions {
-  display: block;
-}
-
-#leftSuggestions li,
-#rightSuggestions li {
+.suggestions li {
   padding: 10px;
   cursor: pointer;
   border-bottom: 1px solid #ccc;
 }
 
-#leftSuggestions li:last-child,
-#rightSuggestions li:last-child {
+.suggestions li:last-child {
   border-bottom: none;
 }
 
-#leftSuggestions li:hover,
-#rightSuggestions li:hover {
+.suggestions li:hover {
   background-color: #f1f1f1;
 }
 
-#leftCardContainer,
-#rightCardContainer {
+.cardContainer {
   position: absolute;
   top: 40%;
   transform: translateY(-50%);
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-}
-
-#leftCardContainer {
-  left: 20px;
-}
-
-#rightCardContainer {
-  right: 20px;
-}
-
-.card {
-  width: 300px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.card h2 {
-  margin-top: 0;
-  font-size: 20px;
-}
-
-.card p {
-  margin: 10px 0;
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.card span.label {
-  font-weight: bold;
-}
-
-.card span.value {
-  margin-left: 5px;
+  max-width: 90%;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
 }
 
 #chart {
   position: absolute;
   top: 50%;
   left: 50%;
-  /* width: 400px;
-  height: 300px;
-  margin: 20px auto; */
+  transform: translate(-50%, -50%);
+}
+
+.searchBarContainer {
+  transition: all 0.5s ease;
+}
+
+.searchBarContainer.movedLeft {
+  transform: translateX(-100%);
+}
+
+.searchBarContainer.movedRight {
+  transform: translateX(100%);
 }

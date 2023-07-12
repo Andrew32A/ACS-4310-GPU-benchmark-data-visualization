@@ -10,18 +10,9 @@ const chartContainer = document.getElementById("chart");
 let dataset = [];
 
 // load the dataset from file
-d3.text("./data/benchmarks.csv").then((data) => {
+d3.csv("./data/benchmarks.csv").then((data) => {
   // parse the CSV data into an array of objects
-  const lines = data.split("\n");
-  const headers = lines[0].split(",");
-  dataset = lines.slice(1).map((line) => {
-    const values = line.split(",");
-    const entry = {};
-    headers.forEach((header, index) => {
-      entry[header] = values[index];
-    });
-    return entry;
-  });
+  dataset = data;
 });
 
 // add event listeners
@@ -120,6 +111,13 @@ function displayLeftGPUData() {
 
     // create bar chart
     createBarChart(selectedGPU);
+
+    // move the left search bar to the left
+    document
+      .querySelector(".leftSearchBarContainer")
+      .classList.add("movedLeft");
+  } else {
+    alert("No GPU found with the given name on the left search bar!");
   }
 }
 
@@ -153,6 +151,13 @@ function displayRightGPUData() {
 
     // create bar chart
     createBarChart(selectedGPU);
+
+    // move the right search bar to the right
+    document
+      .querySelector(".rightSearchBarContainer")
+      .classList.add("movedRight");
+  } else {
+    alert("No GPU found with the given name on the right search bar!");
   }
 }
 
@@ -167,7 +172,9 @@ function createBarChart(selectedGPU) {
     .attr("width", width)
     .attr("height", height);
 
-  const maxG3Dmark = selectedGPU.G3Dmark;
+  const maxG3Dmark = d3.max(dataset, function (d) {
+    return +d.G3Dmark;
+  });
 
   const xScale = d3
     .scaleLinear()
@@ -185,13 +192,13 @@ function createBarChart(selectedGPU) {
   svg
     .append("g")
     .attr("class", "x-axis")
-    .attr("transform", "translate(50, " + height + ")")
+    .attr("transform", `translate(0, ${height - 50})`)
     .call(xAxis);
 
   svg
     .append("g")
     .attr("class", "y-axis")
-    .attr("transform", "translate(50, 0)")
+    .attr("transform", `translate(50, 0)`)
     .call(yAxis);
 
   svg
@@ -201,18 +208,8 @@ function createBarChart(selectedGPU) {
     .append("rect")
     .attr("class", "bar")
     .attr("x", 50)
-    .attr("y", (d) => yScale(d.gpuName))
-    .attr("width", (d) => xScale(d.G3Dmark))
-    .attr("height", yScale.bandwidth());
-
-  svg
-    .selectAll(".label")
-    .data([selectedGPU])
-    .enter()
-    .append("text")
-    .attr("class", "label")
-    .attr("x", (d) => xScale(d.G3Dmark) + 60)
-    .attr("y", (d) => yScale(d.gpuName) + yScale.bandwidth() / 2)
-    .attr("dy", "0.35em")
-    .text((d) => d.G3Dmark);
+    .attr("y", 1000)
+    .attr("width", 500)
+    .attr("height", 500)
+    .attr("fill", "#1f77b4");
 }
