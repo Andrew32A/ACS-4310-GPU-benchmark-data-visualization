@@ -1,10 +1,10 @@
-# GPU Benchmark Data
+# GPU VS
 
 This project allows users to compare the performance of different GPUs using benchmark data from 2023. The GPUs can be searched by their names, and their key properties are displayed on the screen. Furthermore, the application provides a comparison chart which helps users make informed decisions when choosing a GPU.
 
-<h2 align="center"><a href="https://andrew32a.github.io/ACS-4310-GPU-benchmark-data-visualization/">Click here to try it out!</a></h3>
+<h2 align="center"><a href="https://andrew32a.github.io/GPU-VS/">Click here to try it out!</a></h3>
 
-<img src="https://github.com/Andrew32A/ACS-4310-GPU-benchmark-data-visualization/blob/main/images/screenshot.png" align="center">
+<img src="https://github.com/Andrew32A/GPU-VS/blob/main/images/screenshot.png" align="center">
 
 ## Project Structure
 
