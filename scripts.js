@@ -152,6 +152,9 @@ function displayLeftGPUData() {
     // make the left card container visible
     leftCardContainer.style.opacity = "1";
 
+    // add back to search bar event listener
+    backToSearchBarLeft();
+
     // move the left search bar to the left
     document
       .querySelector(".leftSearchBarContainer")
@@ -209,6 +212,9 @@ function displayRightGPUData() {
     // make the right card container visible
     rightCardContainer.style.opacity = "1";
 
+    // add back to search bar event listener
+    backToSearchBarRight();
+
     // move the right search bar to the right
     document
       .querySelector(".rightSearchBarContainer")
@@ -217,6 +223,63 @@ function displayRightGPUData() {
     alert("No GPU found with the given name on the right search bar!");
   }
 }
+
+// event listeners for left and right card containers to go back to the search bars
+function backToSearchBarLeft() {
+  leftCardContainer.addEventListener("click", handleClickLeft);
+}
+
+function backToSearchBarRight() {
+  rightCardContainer.addEventListener("click", handleClickRight);
+}
+
+const handleClickLeft = (e) => {
+  // clear chart container
+  chartContainer.innerHTML = "";
+
+  // hide vs text
+  vsText.style.opacity = "0";
+
+  // remove cursor pointer from left card container
+  leftCardContainer.style.cursor = "default";
+
+  // hide left card container
+  leftCardContainer.style.opacity = "0";
+  document
+    .querySelector(".leftSearchBarContainer")
+    .classList.remove("movedLeft");
+
+  // clear search bar and reset GPU data
+  leftSearchBar.value = "";
+  leftGPUData = null;
+
+  // remove this event listener
+  leftCardContainer.removeEventListener("click", handleClickLeft);
+};
+
+const handleClickRight = (e) => {
+  // clear chart container
+  chartContainer.innerHTML = "";
+
+  // hide vs text
+  vsText.style.opacity = "0";
+
+  // remove cursor pointer from right card container
+  rightCardContainer.style.cursor = "default";
+
+  // hide right card container
+  rightCardContainer.style.opacity = "0";
+  document
+    .querySelector(".rightSearchBarContainer")
+    .classList.remove("movedRight");
+
+  // clear search bar and reset GPU data
+  rightSearchBar.value = "";
+  rightGPUData = null;
+
+  // remove this event listener
+  rightCardContainer.removeEventListener("click", handleClickRight);
+};
 
 function createComparisonChart() {
   if (leftGPUData && rightGPUData) {
