@@ -227,7 +227,7 @@ function createComparisonChart() {
     chartContainer.innerHTML = "";
 
     const margin = { top: 50, right: 20, bottom: 30, left: 40 };
-    let width = 400 - margin.left - margin.right;
+    let width = 420 - margin.left - margin.right;
     let height = 160 - margin.top - margin.bottom;
 
     properties.forEach((property, i) => {
