@@ -137,14 +137,16 @@ body {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  transition: all 0.1s ease-in-out;
   transform: scale(1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* add some shadow for a 3D effect */
+  transition: transform 0.5s ease, box-shadow 0.5s ease, opacity 0.5s ease; /* add transition effect */
 }
 
 #leftCardContainer:hover {
   cursor: pointer;
-  transition: all 0.1s ease-in-out;
-  transform: scale(1.01);
+  transform: scale(1.05); /* scale up the image when hovered over */
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.4); /* intensify the shadow when hovered over */
+  opacity: 1; /* increase the opacity when hovered over */
 }
 
 #rightCardContainer {
@@ -154,14 +156,16 @@ body {
   flex-direction: column;
   align-items: flex-end;
   justify-content: flex-start;
-  transition: all 0.1s ease-in-out;
   transform: scale(1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* add some shadow for a 3D effect */
+  transition: transform 0.5s ease, box-shadow 0.5s ease, opacity 0.5s ease; /* add transition effect */
 }
 
 #rightCardContainer:hover {
   cursor: pointer;
-  transition: all 0.1s ease-in-out;
-  transform: scale(1.01);
+  transform: scale(1.05); /* scale up the image when hovered over */
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.4); /* intensify the shadow when hovered over */
+  opacity: 1; /* increase the opacity when hovered over */
 }
 
 .cardContainer::-webkit-scrollbar {
@@ -233,4 +237,23 @@ body {
 svg {
   border-radius: 10px;
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+#titleImage {
+  width: 40vw; /* control the width */
+  height: 25vh; /* control the height */
+  position: absolute;
+  top: 10%; /* positioning from the top */
+  z-index: 3;
+  border-radius: 50px; /* give it rounded corners */
+  opacity: 0.8; /* control the opacity */
+  object-fit: cover; /* make sure the image maintains aspect ratio and covers the whole area */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* add some shadow for a 3D effect */
+  transition: transform 0.5s ease, box-shadow 0.5s ease, opacity 0.5s ease; /* add transition effect */
+}
+
+#titleImage:hover {
+  transform: scale(1.05); /* scale up the image when hovered over */
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.4); /* intensify the shadow when hovered over */
+  opacity: 1; /* increase the opacity when hovered over */
 }

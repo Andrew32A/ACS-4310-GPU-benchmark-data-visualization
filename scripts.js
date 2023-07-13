@@ -155,6 +155,9 @@ function displayLeftGPUData() {
     // add back to search bar event listener
     backToSearchBarLeft();
 
+    // add cursor pointer to left card container
+    leftCardContainer.style.cursor = "pointer";
+
     // move the left search bar to the left
     document
       .querySelector(".leftSearchBarContainer")
@@ -214,6 +217,9 @@ function displayRightGPUData() {
 
     // add back to search bar event listener
     backToSearchBarRight();
+
+    // add cursor pointer to right card container
+    rightCardContainer.style.cursor = "pointer";
 
     // move the right search bar to the right
     document
