@@ -4,7 +4,7 @@ This project allows users to compare the performance of different GPUs using ben
 
 <h2 align="center"><a href="https://andrew32a.github.io/ACS-4310-GPU-benchmark-data-visualization/">Click here to try it out!</a></h3>
 
-<img src="https://github.com/Andrew32A/typing_gym/blob/main/images/screenshot.png" align="center">
+<img src="https://github.com/Andrew32A/ACS-4310-GPU-benchmark-data-visualization/blob/main/images/screenshot.png" align="center">
 
 ## Project Structure
 
