@@ -52,6 +52,8 @@ body {
   font-size: 16px;
   background-color: #444;
   color: #fff;
+  opacity: 0.8;
+  outline: none;
 }
 
 .searchButton {
@@ -65,10 +67,12 @@ body {
   font-size: 16px;
   cursor: pointer;
   transition: all 0.3s ease;
+  opacity: 0.8;
 }
 
 .searchButton:hover {
   background-color: #aaa;
+  opacity: 0.8;
 }
 
 .suggestions {
@@ -87,12 +91,14 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1;
   display: none;
+  opacity: 0.8;
 }
 
 .suggestions li {
   padding: 10px;
   cursor: pointer;
   border-bottom: 1px solid #ccc;
+  opacity: 0.9;
 }
 
 .suggestions li:last-child {
@@ -102,6 +108,7 @@ body {
 .suggestions li:hover {
   background-color: #f1f1f1;
   color: #000;
+  opacity: 1;
 }
 
 .cardContainerWrapper {
