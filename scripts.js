@@ -266,6 +266,9 @@ const handleClickLeft = (e) => {
   leftSearchBar.value = "";
   leftGPUData = null;
 
+  // check if title should be displayed
+  shouldDisplayTitle();
+
   // remove this event listener
   leftCardContainer.removeEventListener("click", handleClickLeft);
 };
@@ -290,9 +293,21 @@ const handleClickRight = (e) => {
   rightSearchBar.value = "";
   rightGPUData = null;
 
+  // check if title should be displayed
+  shouldDisplayTitle();
+
   // remove this event listener
   rightCardContainer.removeEventListener("click", handleClickRight);
 };
+
+function shouldDisplayTitle() {
+  console.log("left", leftGPUData);
+  console.log("right", rightGPUData);
+  if (leftGPUData === null && rightGPUData === null) {
+    console.log("show");
+    titleImage.style.display = "block";
+  }
+}
 
 function createComparisonChart() {
   if (leftGPUData && rightGPUData) {
