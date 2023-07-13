@@ -6,6 +6,7 @@ const leftSearchButton = document.getElementById("leftSearchButton");
 const rightSearchButton = document.getElementById("rightSearchButton");
 const leftCardContainer = document.getElementById("leftCardContainer");
 const rightCardContainer = document.getElementById("rightCardContainer");
+const vsText = document.getElementById("vsText");
 const chartContainer = document.getElementById("chart");
 let dataset = [];
 let leftGPUData = null;
@@ -219,6 +220,10 @@ function displayRightGPUData() {
 
 function createComparisonChart() {
   if (leftGPUData && rightGPUData) {
+    // show vs text
+    vsText.style.opacity = "1";
+
+    // clear chart container
     chartContainer.innerHTML = "";
 
     const margin = { top: 50, right: 20, bottom: 30, left: 40 };

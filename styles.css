@@ -110,7 +110,6 @@ body {
 }
 
 .cardContainer {
-  background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
   position: absolute;
   width: 40%;
   max-height: 80%;
@@ -124,6 +123,7 @@ body {
 }
 
 #leftCardContainer {
+  background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
   left: 5%;
   display: flex;
   flex-direction: column;
@@ -132,6 +132,7 @@ body {
 }
 
 #rightCardContainer {
+  background: linear-gradient(-45deg, #fdfcfb 0%, #e2d1c3 100%);
   right: 5%;
   display: flex;
   flex-direction: column;
@@ -192,4 +193,15 @@ body {
 
 .searchBarContainer.movedRight {
   transform: translateX(100%);
+}
+
+#vsText {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  opacity: 0;
+  z-index: -1;
+  transition: all 0.5s ease;
 }
