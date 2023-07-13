@@ -7,6 +7,7 @@ const rightSearchButton = document.getElementById("rightSearchButton");
 const leftCardContainer = document.getElementById("leftCardContainer");
 const rightCardContainer = document.getElementById("rightCardContainer");
 const vsText = document.getElementById("vsText");
+const titleImage = document.getElementById("titleImage");
 const chartContainer = document.getElementById("chart");
 let dataset = [];
 let leftGPUData = null;
@@ -158,6 +159,9 @@ function displayLeftGPUData() {
     // add cursor pointer to left card container
     leftCardContainer.style.cursor = "pointer";
 
+    // hide title
+    titleImage.style.display = "none";
+
     // move the left search bar to the left
     document
       .querySelector(".leftSearchBarContainer")
@@ -220,6 +224,9 @@ function displayRightGPUData() {
 
     // add cursor pointer to right card container
     rightCardContainer.style.cursor = "pointer";
+
+    // hide title
+    titleImage.style.display = "none";
 
     // move the right search bar to the right
     document
