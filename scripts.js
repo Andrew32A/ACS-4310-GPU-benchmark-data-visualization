@@ -301,10 +301,7 @@ const handleClickRight = (e) => {
 };
 
 function shouldDisplayTitle() {
-  console.log("left", leftGPUData);
-  console.log("right", rightGPUData);
   if (leftGPUData === null && rightGPUData === null) {
-    console.log("show");
     titleImage.style.display = "block";
   }
 }
